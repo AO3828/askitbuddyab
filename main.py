@@ -18,10 +18,10 @@ from langchain.storage import InMemoryStore
 
 
 #Set up OpenAI key
-if load_dotenv('.env'):
-    OPENAI_KEY = os.getenv('OPENAI_API_KEY')
-else:
-    OPENAI_KEY = st.secrets['OPENAI_API_KEY']
+#if load_dotenv('.env'):
+OPENAI_KEY = os.getenv('OPENAI_API_KEY')
+#else:
+#    OPENAI_KEY = st.secrets['OPENAI_API_KEY']
 
 
 
