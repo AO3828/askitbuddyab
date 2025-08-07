@@ -16,9 +16,8 @@ st.write("""
 
 # Section 2: How to use this app
 with st.expander("How to use this App"):
-    st.write("1. Enter your prompt in the text area.")
-    st.write("2. Click the 'Submit' button.")
-    st.write("3. The app will generate a text completion based on your prompt.")
+    st.write("1. Enter your prompt in the text area or click on the predefined prompts.")
+    st.write("2. The app will generate a text completion based on your prompt.")
 
 # Section 3: Contact Info or Additional Details (Optional)
 st.header("Contact Us")
