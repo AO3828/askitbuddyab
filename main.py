@@ -170,6 +170,17 @@ def main():
     # Admin UI
     if username == "admin":
         st.title("📁 Admin Dashboard")
+
+        filelist=[]
+        for root, dirs, files in os.walk("data"):
+            for file in files:
+                filename=os.path.join(root, file)
+                filelist.append(filename)
+
+        with st.expander("Click to see the uploaded files"):
+            st.write(filelist)
+
+        st.subheader("Upload files:")
         uploaded_files = st.file_uploader("Upload PDF files to the data folder", type=["pdf"], accept_multiple_files=True)
         if uploaded_files:
             data_path = Path("data")
