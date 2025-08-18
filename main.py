@@ -211,23 +211,26 @@ def main():
 
     # Admin UI
     if username == "admin":
-        st.title("📁 Admin Dashboard")
+        st.header("📁 Admin Dashboard")
 
+        st.write("")
         filelist=[]
         for root, dirs, files in os.walk("data"):
             for file in files:
                 filename=os.path.join(root, file)
+                st.markdown(filename)
                 filelist.append(filename)
 
-        with st.expander("Click to see the uploaded files"):
-            st.write(filelist)
+        #with st.expander("Click to see the uploaded files"):
+        #    st.write(filelist)
 
-        
-        st.subheader("Delete Files in Streamlit")
-        file_to_delete = st.text_input("Enter the file path to delete:")
+        st.write("")
+        st.subheader("Delete file")
+        file_to_delete = st.text_input("Enter the <path>/<filename> to delete:")
         if st.button("Delete File"):
             utility.delete_file(file_to_delete)
-        
+
+        st.write("")
         st.subheader("Upload files:")
         uploaded_files = st.file_uploader("Upload PDF files to the data folder", type=["pdf"], accept_multiple_files=True)
         if uploaded_files:
