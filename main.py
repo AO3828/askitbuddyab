@@ -158,6 +158,32 @@ def show_onboarding_guidance(week, qa_chain=None):
                 with st.spinner(f"Fetching the answer for: {question}"):
                     handle_user_query(qa_chain, question)
 
+# Style sheet for text of input text box
+tabs_font_css = """
+<style>
+div[class*="stTextArea"] label p {
+  font-size: 24px;
+  color: red;
+}
+
+div[class*="stTextInput"] label p {
+  font-size: 24px;
+}
+
+div[class*="stSelect"] label p {
+  font-size: 24px;
+}
+</style>
+
+
+st.write(tabs_font_css, unsafe_allow_html=True)
+
+"""
+
+
+
+
+
 # Simple login screen
 #def login():
 #    st.title("🔐 Login to AskITBuddy")
