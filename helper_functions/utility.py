@@ -28,3 +28,13 @@ def check_password():
     if "password_correct" in st.session_state:  
         st.error("😕 Password incorrect")  
     return False
+
+
+# File deletion function
+def delete_file(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        st.success(f"File '{file_path}' has been deleted.")
+    else:
+        st.error(f"File '{file_path}' does not exist.")
+
