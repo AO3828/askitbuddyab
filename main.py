@@ -222,6 +222,12 @@ def main():
         with st.expander("Click to see the uploaded files"):
             st.write(filelist)
 
+        
+        st.subheader("Delete Files in Streamlit")
+        file_to_delete = st.text_input("Enter the file path to delete:")
+        if st.button("Delete File"):
+            utility.delete_file(file_to_delete)
+        
         st.subheader("Upload files:")
         uploaded_files = st.file_uploader("Upload PDF files to the data folder", type=["pdf"], accept_multiple_files=True)
         if uploaded_files:
