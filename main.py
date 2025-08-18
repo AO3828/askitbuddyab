@@ -15,7 +15,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.retrievers import ParentDocumentRetriever
 from langchain.storage import InMemoryStore
-
+from difflib import get_close_matches
 
 #Set up OpenAI key
 #if load_dotenv('.env'):
@@ -23,18 +23,60 @@ OPENAI_KEY = os.getenv('OPENAI_API_KEY')
 #else:
 #    OPENAI_KEY = st.secrets['OPENAI_API_KEY']
 
-
-
 # Prompt template
 def get_prompt_template():
     return PromptTemplate.from_template("""
-Use the following context to answer the question at the end.
-If you don't know the answer, say you don't know. Be concise and end with 'thanks for asking!'.
+Use the following context to answer the question at the end. 
+If you don't have a clear answer, answer based on the best available clues from the context. 
+If there's absolutely no information, say you don't know. 
+Be concise and end with 'Thanks for asking!'.
 
 {context}
 Question: {question}
 Helpful Answer:
 """)
+
+# --- FAQ MAP FOR LLM REWRITES --- 
+FAQ_MAP = { 
+    # ITD/CIO Related 
+    "who is cio": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is customs cio": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is custom cio": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is head of it": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is head of info tech": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is the boss of itd": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who manages itd": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who manages the it division": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is in charge of the it department": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is cheryl": "Who is Cheryl in Singapore Customs?", 
+    "who is the itd boss": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is the information technology director": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is in charge of ITD": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is head of ITD": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who is the head of IT directorate": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+    "who leads the IT division": "Who is the Chief Information Officer (CIO) of Singapore Customs?", 
+
+    # Customs Leadership 
+    "who is the head of customs": "Who is the Director-General (DG) of Singapore Customs?", 
+    "who leads customs": "Who is the Director-General (DG) of Singapore Customs?", 
+    "who is the dg of customs": "Who is the Director-General (DG) of Singapore Customs?", 
+    "who is customs boss": "Who is the Director-General (DG) of Singapore Customs?", 
+
+    # GovTech Leadership 
+    "who is the head of govtech": "Who is the Chief Executive of GovTech Singapore?", 
+    "who leads govtech": "Who is the Chief Executive of GovTech Singapore?", 
+    "who is govtech boss": "Who is the Chief Executive of GovTech Singapore?"
+} 
+
+
+def rewrite_query_if_needed(query: str) -> str: 
+    lower_q = query.strip().lower() 
+    matches = get_close_matches(lower_q, FAQ_MAP.keys(), n=1, cutoff=0.7) 
+    if matches: 
+        rewritten = FAQ_MAP[matches[0]] 
+        st.caption(f"ðŸ” Rewritten Query: {rewritten}") 
+        return rewritten 
+    return query 
 
 # Build retriever from PDFs in the data folder
 def build_retriever_from_data_folder(data_folder="data"):
