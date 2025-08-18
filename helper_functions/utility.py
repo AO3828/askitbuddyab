@@ -1,6 +1,5 @@
 # filename: utility.py
-import streamlit as st  
-import random  
+import streamlit as st
 import hmac 
 import os
 
