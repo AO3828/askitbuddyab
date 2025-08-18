@@ -74,7 +74,7 @@ def rewrite_query_if_needed(query: str) -> str:
     matches = get_close_matches(lower_q, FAQ_MAP.keys(), n=1, cutoff=0.7) 
     if matches: 
         rewritten = FAQ_MAP[matches[0]] 
-        st.caption(f"ðŸ” Rewritten Query: {rewritten}") 
+        st.caption(f"Rewritten Query: {rewritten}") 
         return rewritten 
     return query 
 
