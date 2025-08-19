@@ -255,9 +255,9 @@ def main():
         #    st.write(filelist)
 
         st.write("")
-        st.subheader("Delete file")
-        file_to_delete = st.text_input("Enter the <path>/<filename> to delete:")
-        if st.button("Delete File"):
+        st.subheader("Delete file:")
+        file_to_delete = st.text_input("<path>/<filename>")
+        if st.button("Delete"):
             utility.delete_file(file_to_delete)
 
         st.write("")
