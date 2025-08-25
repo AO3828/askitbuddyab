@@ -186,7 +186,6 @@ tabs_font_css = """
 <style>
 div[class*="stTextArea"] label p {
   font-size: 24px;
-  color: red;
 }
 
 div[class*="stTextInput"] label p {
@@ -294,7 +293,7 @@ def main():
     )
     show_onboarding_guidance(onboarding_week, qa_chain=qa_chain)
 
-    user_query = st.text_input("Ask me anything about your IT onboarding:")
+    user_query = st.text_area("Ask me anything about your IT onboarding:")
     if user_query:
         with st.spinner("Thinking..."):
             handle_user_query(qa_chain, user_query)
