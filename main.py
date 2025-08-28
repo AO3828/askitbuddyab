@@ -273,7 +273,7 @@ def main():
         return
 
     # User UI
-    st.header("AskITBuddy - Your IT Onboarding Assistant")
+    st.header("AskITBuddy - Your IT Onboarding Assistant (POC)")
 
     retriever = build_retriever_from_data_folder("data")
     if not retriever:
